@@ -186,7 +186,7 @@ public class Keyboard {
 	public static int menu(String opcoes) {
 		int p;
 		String opcao;
-		int nOpcoes = -1;
+		int nOpcoes = 0;
 		System.out.println("Opcoes:\n");
 		do {
 			p = opcoes.indexOf('/');
@@ -200,7 +200,7 @@ public class Keyboard {
 			System.out.println(nOpcoes + " => " + opcao);
 			opcoes = opcoes.substring(p + 1);
 
-		} while (p > 0);
+		} while (p >= 0);
 
 		p = readInt("\nEntrar com a opcao: ");
 

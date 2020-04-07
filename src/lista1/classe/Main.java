@@ -18,17 +18,17 @@ public class Main {
 		int cont = 0;
 
 		do {
-			opcao = Keyboard.menu(" Sair/ Cadastrar Contas/ Listar Contas/" + " Excluir Contas/ Efetuar Depositos"
-					+ " / Efetuar Saque/ Consutar Conta/ Efetuar trasferência entre contas");
+			opcao = Keyboard.menu("Cadastrar Contas/ Listar Contas/" + " Excluir Contas/ Efetuar Depositos"
+					+ " / Efetuar Saque/ Consutar Conta/ Efetuar trasferência entre contas/ Sair");
 
 			switch (opcao) {
 
 			case 1:// cadrasto
 				conta = new Conta();
 				String titular = Keyboard.readString("Digite o nome do titular da conta: ");
-
 				conta.cadastro(titular);
 				contaCliente.add(conta);
+
 				break;
 			case 2:
 				conta = new Conta();
@@ -54,24 +54,32 @@ public class Main {
 				conta = new Conta();
 
 				numero = Keyboard.readInt("Digite o numero da conta:");
-				for (Conta c : contaCliente) {
-					if (numero == c.getNumConta()) {
 
-						double deposito = Keyboard.readDouble("Digite o valor de deposito:");
-						c.Depositar(deposito);
-					}
-				}
+				double deposito = Keyboard.readDouble("Digite o valor de deposito:");
+
+				Main.verificar(contaCliente, numero).Depositar(deposito);
+
 				break;
 			case 5:// saque
 				conta = new Conta();
 
 				numero = Keyboard.readInt("Digite o numero da conta:");
+				boolean achou = false;
 				for (Conta c : contaCliente) {
 					if (numero == c.getNumConta()) {
 
-						double valor = Keyboard.readDouble("Digite o valor de deposito:");
+						double valor = Keyboard.readDouble("Digite o valor de saque:");
 						c.Sacar(valor);
+						System.out.println("valor1");
+						achou = true;
+
 					}
+
+				}
+
+				if (achou == false) {
+					System.out.println("Essa conta não existe!");
+					System.out.println("valor2");
 				}
 
 				break;
@@ -83,35 +91,63 @@ public class Main {
 					if (numero == c.getNumConta()) {
 
 						c.Dadosbacarios();
+					} else {
+						System.out.println("Essa conta não existe!");
 					}
 				}
 
 				break;
 			case 7:
-
 				numero = Keyboard.readInt("Digite o numero da sua conta:");
-
 				for (Conta xs : contaCliente) {
 					if (numero == xs.getNumConta()) {
+						numero2 = Keyboard.readInt("Digite digite a conta do destinatario: ");
 
-						numero2 = Keyboard.readInt("Digite digite a segunda conta: ");
 						for (Conta x : contaCliente) {
 							if (numero2 == x.getNumConta()) {
 
 								double valor = Keyboard.readInt("Digite o valor da transferencia: ");
 								xs.trasnferir(x, valor);
-							}
 
+							}
 						}
 
 					}
-
 				}
+				break;
+
+			case 8:
+				System.out.println("programa encerrado!");
 				break;
 			}
 
-		} while (opcao != 0);
+		} while (opcao != 8);
 
+	}
+
+	public Conta verificar(ArrayList<Conta> contaCliente, int numero) {
+
+		
+			boolean achou = false;
+			
+			for (Conta c : contaCliente) {
+			
+				if (numero == c.getNumConta()) {
+					achou = true;
+					return c;
+				}
+
+				}			
+
+			if (achou == false) {
+				System.out.println("Essa conta não existe!");
+
+				
+			}
+			return null;
+
+			
+		 
 	}
 
 }
